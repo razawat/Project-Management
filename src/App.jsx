@@ -1,18 +1,44 @@
 import "./App.css";
+import { useState } from "react";
 import Sidebar from "./Component/Sidebar/Sidebar";
 import NoProjectSelected from "./Component/NoProjectSelected/NoProjectSelected";
+import CreateNewProject from "./Component/CreateNewProject/CreateNewProject";
+import { state } from "./const";
+import { HandleCommunication } from "./Context Api/useContext";
 
 function App() {
+  //const projectState = useContext(HandleCommunication);
+  const [currentState, updateCurrentState] = useState({
+    state: state.notSelected,
+    selecedIndex: null,
+  });
+
+  function handleNewProject(action) {
+    console.log("Clicked ", action);
+    updateCurrentState((prev) => {
+      return { ...prev, state: action };
+    });
+  }
+
+  const updateHandler = {
+    addNewProject: handleNewProject,
+    //backToNoSelected: handleNoSelected,
+  };
+
   return (
-    <div className="flex flex-row bg-slate-50">
-    <aside className="w-2/5 sm:w-1/5 bg-slate-900 rounded-r-3xl pt-12 pl-2 md:pl-5">
-    <Sidebar/>
-    </aside>
-    <main className="w-3/5 sm:w-4/5 pt-12">
-    <NoProjectSelected/>
-    </main>
-     
-    </div>
+    <HandleCommunication.Provider value={updateHandler.addNewProject}>
+      <div className="flex flex-row bg-slate-50">
+        <aside className="w-2/5 sm:w-1/5 bg-slate-900 rounded-r-3xl pt-12 pl-2 md:pl-5">
+          <Sidebar />
+        </aside>
+        <main className="w-3/5 sm:w-4/5 pt-12">
+          {state.notSelected === currentState?.state && <NoProjectSelected />}
+          {state.createNewProject === currentState?.state && (
+            <CreateNewProject />
+          )}
+        </main>
+      </div>
+    </HandleCommunication.Provider>
   );
 }
 

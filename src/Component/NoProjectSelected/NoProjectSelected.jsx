@@ -1,5 +1,7 @@
-import Image from "/public/no-projects.png";
+import Image from "/no-projects.png";
 import DarkButton from "../Util/Button/DarkButton";
+import { state } from "../../const";
+
 export default function NoProjectSelected() {
   return (
     <ul className="flex flex-col items-center gap-y-3">
@@ -21,7 +23,7 @@ export default function NoProjectSelected() {
       </li>
 
       <li>
-        <DarkButton name="Create New Project" />
+        <DarkButton name="Create New Project" extraClass="bg-zinc-700 hover:bg-zinc-600 hover:text-white" action={state.createNewProject}/>
       </li>
     </ul>
   );
