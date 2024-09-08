@@ -14,7 +14,7 @@ function App() {
     selecedIndex: null,
     projectsList: [],
   });
-
+  console.log("Check State", currentState);
   function handleNewProject(action) {
     console.log("Clicked ", action);
     updateCurrentState((prev) => {
@@ -52,13 +52,38 @@ function App() {
     });
   }
 
+  function handleNewTask(index, val) {
+    console.log("In handleNewTask");
+    return updateCurrentState((prev) => {
+      let updateList = [...prev.projectsList];
+      const updateSelectedProject = { ...updateList[index] };
+      updateSelectedProject.tasks = [...updateSelectedProject.tasks, val];
+      updateList[index] = updateSelectedProject;
+      console.log("Update Task", updateList);
+      return { ...prev, projectsList: updateList };
+    });
+  }
+
+  function handleClearTask(index) {
+    updateCurrentState((prev) => {
+      let updateList = [...prev.projectsList];
+      const updateTask = updateList[currentState.selecedIndex].tasks.filter((_,i) => i !== index);
+      const updatedSelectedProject = {...updateList[currentState.selecedIndex],tasks:updateTask};
+      //updateList[currentState.selecedIndex].tasks = updateTask;
+      updateList[currentState.selecedIndex] = updatedSelectedProject;
+      return { ...prev, projectsList:updateList };
+    });
+  }
+
   const updateHandler = {
     addNewProject: handleNewProject,
+    addNewTask: handleNewTask,
+    clearTask: handleClearTask,
     //backToNoSelected: handleNoSelected,
   };
 
   return (
-    <HandleCommunication.Provider value={updateHandler.addNewProject}>
+    <HandleCommunication.Provider value={updateHandler}>
       <div className="flex flex-row bg-slate-50">
         <aside className="w-2/5 sm:w-1/5 bg-slate-900 rounded-r-3xl pt-12 pl-2 md:pl-5">
           <Sidebar

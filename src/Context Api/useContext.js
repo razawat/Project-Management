@@ -3,5 +3,7 @@ import { createContext } from "react";
 
 export const HandleCommunication = createContext({
     addNewProject:() => {},
+    addNewTask:() => {},
+    clearTask:() => {},
    // backToNoSelected:() => {}
 });

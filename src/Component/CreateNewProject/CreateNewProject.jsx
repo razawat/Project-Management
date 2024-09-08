@@ -16,6 +16,7 @@ export default function CreateNewProject({saveNewProject}) {
             title:titleRef.current?.value,
             desc:descRef.current?.value,
             date:dateRef.current?.value,
+            tasks:[],
         }
         saveNewProject(inputValues);
     }

@@ -6,7 +6,7 @@ import { state } from "../../const";
 
 
 export default function Sidebar({ project,selectedProject }) {
-  console.log("Project: ", project);
+ // console.log("Project: ", project);
 
   function handleProjectList(index) {
     selectedProject(index);
@@ -20,7 +20,7 @@ export default function Sidebar({ project,selectedProject }) {
       </h1>
       <DarkButton
         name="+ Add Project"
-        extraClass="bg-zinc-700 hover:bg-zinc-600 hover:text-white"
+        extraClass="bg-zinc-700 hover:bg-zinc-600 hover:text-white mt-7"
         action={state.createNewProject}
       />
       <ul className="mt-10">
