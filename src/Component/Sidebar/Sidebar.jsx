@@ -3,8 +3,15 @@
 import DarkButton from "../Util/Button/DarkButton";
 import { state } from "../../const";
 
-export default function Sidebar({ project }) {
+
+
+export default function Sidebar({ project,selectedProject }) {
   console.log("Project: ", project);
+
+  function handleProjectList(index) {
+    selectedProject(index);
+  }
+
   return (
     <div className=" h-screen flex flex-col">
       <h1 className="text-white font-serif text-sm md:text-2xl font-bold">
@@ -18,8 +25,11 @@ export default function Sidebar({ project }) {
       />
       <ul className="mt-10">
         {project.map((val, i) => (
-          <li key={i} className="text-zinc-400 text-lg">
-            <button className="w-2/3 hover:bg-stone-600 hover:text-white text-left px-1 truncate">
+          <li key={i} className="text-zinc-400 text-lg mb-1">
+            <button
+              className="w-2/3 hover:bg-stone-600 hover:text-white text-left px-1 truncate"
+              onClick={() => handleProjectList(i)}
+            >
               {val?.title}
             </button>
           </li>

@@ -5,13 +5,14 @@ import NoProjectSelected from "./Component/NoProjectSelected/NoProjectSelected";
 import CreateNewProject from "./Component/CreateNewProject/CreateNewProject";
 import { state } from "./const";
 import { HandleCommunication } from "./Context Api/useContext";
+import ProjectDetail from "./Component/ProjectDetail/ProjectDetail";
 
 function App() {
   //const projectState = useContext(HandleCommunication);
   const [currentState, updateCurrentState] = useState({
     state: state.notSelected,
     selecedIndex: null,
-    projectsList:[],
+    projectsList: [],
   });
 
   function handleNewProject(action) {
@@ -26,8 +27,29 @@ function App() {
     updateCurrentState((prev) => {
       const updateList = [...prev.projectsList];
       updateList.push(inputValues);
-      return {...prev,state:state.notSelected,projectsList:updateList}
-    })
+      return { ...prev, state: state.notSelected, projectsList: updateList };
+    });
+  }
+
+  function handleSelectedProject(index) {
+    //console.log('Selected',index);
+    updateCurrentState((prev) => {
+      return { ...prev, state: state.projectSelected, selecedIndex: index };
+    });
+  }
+
+  function handleProjectDelete(index) {
+    updateCurrentState((prev) => {
+      const updatedProjectList = currentState.projectsList.filter(
+        (val, i) => i !== index
+      );
+      return {
+        ...prev,
+        projectsList: updatedProjectList,
+        state: state.notSelected,
+        selecedIndex: null,
+      };
+    });
   }
 
   const updateHandler = {
@@ -39,12 +61,24 @@ function App() {
     <HandleCommunication.Provider value={updateHandler.addNewProject}>
       <div className="flex flex-row bg-slate-50">
         <aside className="w-2/5 sm:w-1/5 bg-slate-900 rounded-r-3xl pt-12 pl-2 md:pl-5">
-          <Sidebar project={currentState.projectsList}/>
+          <Sidebar
+            project={currentState.projectsList}
+            selectedProject={handleSelectedProject}
+          />
         </aside>
         <main className="w-3/5 sm:w-4/5 pt-12">
           {state.notSelected === currentState?.state && <NoProjectSelected />}
           {state.createNewProject === currentState?.state && (
-            <CreateNewProject saveNewProject={handleSaveProject}/>
+            <CreateNewProject saveNewProject={handleSaveProject} />
+          )}
+          {state.projectSelected === currentState?.state && (
+            <ProjectDetail
+              projectDetail={
+                currentState.projectsList[currentState.selecedIndex]
+              }
+              index={currentState.selecedIndex}
+              onDelete={handleProjectDelete}
+            />
           )}
         </main>
       </div>
