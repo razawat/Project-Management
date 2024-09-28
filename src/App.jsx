@@ -92,7 +92,7 @@ function App() {
             selectedProject={handleSelectedProject}
           />
         </aside>
-        <main className="w-4/5 pt-12">
+        <main className="w-full sm:w-4/5 pt-12">
           {state.notSelected === currentState?.state && <NoProjectSelected />}
           {state.createNewProject === currentState?.state && (
             <CreateNewProject saveNewProject={handleSaveProject} />

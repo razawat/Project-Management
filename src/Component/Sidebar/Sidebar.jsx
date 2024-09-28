@@ -21,7 +21,7 @@ export default function Sidebar({ project, selectedProject }) {
   return (
     <>
      {/* Bug - position remain absolute when sideBar value is true & screen reside  */}
-      <div className={`flex flex-col bg-slate-900 ${sideBar?'absolute':''}`}>
+      <div className={`flex flex-col bg-slate-900 absolute sm:relative`}>
         <div className="block sm:hidden">
           <button onClick={handleHamberger}>
             <img
@@ -31,8 +31,7 @@ export default function Sidebar({ project, selectedProject }) {
             />
           </button>
         </div>
-        {sideBar && (
-          <div className={`h-screen pt-12 pl-6 pr-6 ${sideBar?'block':'hidden'} sm:block`}>
+          <div className={`h-screen pt-12 pl-6 pr-6 ${sideBar?'block':'hidden sm:block'}`}>
             <h1 className="text-white font-serif text-sm md:text-2xl font-bold">
               {" "}
               YOUR PROJECT
@@ -55,7 +54,6 @@ export default function Sidebar({ project, selectedProject }) {
               ))}
             </ul>
           </div>
-        )}
       </div>
     </>
   );
