@@ -7,6 +7,7 @@ import { state } from "./const";
 import { HandleCommunication } from "./Context Api/useContext";
 import ProjectDetail from "./Component/ProjectDetail/ProjectDetail";
 
+
 function App() {
   //const projectState = useContext(HandleCommunication);
   const [currentState, updateCurrentState] = useState({
@@ -85,13 +86,13 @@ function App() {
   return (
     <HandleCommunication.Provider value={updateHandler}>
       <div className="flex flex-row bg-slate-50">
-        <aside className="w-2/5 sm:w-1/5 bg-slate-900 rounded-r-3xl pt-12 pl-2 md:pl-5">
+        <aside>
           <Sidebar
             project={currentState.projectsList}
             selectedProject={handleSelectedProject}
           />
         </aside>
-        <main className="w-3/5 sm:w-4/5 pt-12">
+        <main className="w-4/5 pt-12">
           {state.notSelected === currentState?.state && <NoProjectSelected />}
           {state.createNewProject === currentState?.state && (
             <CreateNewProject saveNewProject={handleSaveProject} />
