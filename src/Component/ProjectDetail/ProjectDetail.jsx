@@ -19,7 +19,7 @@ export default function ProjectDetail({ projectDetail, index, onDelete }) {
   }
 
   return (
-    <div className="w-full md:w-3/4 pl-5">
+    <div className="w-full md:w-3/4 pl-5 pr-5">
       <div className="flex flex-row justify-between mb-1">
         <h1 className="font-mono font-extrabold text-2xl">
           {projectDetail?.title}
