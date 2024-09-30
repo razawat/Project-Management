@@ -3,6 +3,7 @@ import Input from "../Util/Input/Input";
 import DarkButton from "../Util/Button/DarkButton";
 import { useRef, useContext } from "react";
 import { HandleCommunication } from "../../Context Api/useContext";
+import Dialog from "../Util/Dialog/Dialog";
 
 export default function Task({ list, index }) {
   // console.log('Prop list',list);
@@ -10,10 +11,20 @@ export default function Task({ list, index }) {
   // const [taskList,updateTaskList] = useState(list);
   const { addNewTask,clearTask } = useContext(HandleCommunication);
   const taskRef = useRef();
+  const taskValidationRef = useRef();
 
   function handleAddTask() {
     //  console.log("Task Value",taskRef?.current.value,taskList);
-    addNewTask(index, taskRef?.current?.value);
+    const taskValue = taskRef?.current?.value;
+    if(taskValue != null && taskValue.trim().length !=0) {
+      addNewTask(index, taskValue);
+      // Not the ideal approach to reset the input
+      taskRef.current.value = "";
+    }
+    else {
+      taskValidationRef.current.show();
+    }
+    
   }
 
   function handleClearTask(index) {
@@ -22,6 +33,7 @@ export default function Task({ list, index }) {
 
   return (
     <>
+    <Dialog label="Task" ref={taskValidationRef}/>
       <h1 className="font-mono font-extrabold text-2xl mt-5">Tasks</h1>
       <div className="flex flex-row justify-between mt-5 mb-8">
         <div className="w-2/3">
