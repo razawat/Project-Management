@@ -43,7 +43,7 @@ export default function CreateNewProject({ saveNewProject }) {
   return (
     <>
       <Dialog ref={dialogRef} label={dialogLabel} />
-      <div className="w-2/4 pl-5">
+      <div className="w-11/12 sm:w-3/4 md:w-2/4 pl-5">
         <div className="flex flex-row justify-end gap-3">
           <DarkButton
             name="Cancel"
